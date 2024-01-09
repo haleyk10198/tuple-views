@@ -42,16 +42,22 @@ namespace ranges::tuple {
 
     struct find_fn : tuple_adaptor<find_fn> {
         template<typename Tup, typename T, std::size_t... Is>
-        consteval std::size_t find_impl(Tup &&tup, T value, std::index_sequence<Is...>) const {
-            constexpr auto pred = [tup_ = std::forward<Tup>(tup), value_ = std::forward<T>(value)]<std::size_t idx>() {
-                auto field = std::get<idx>(std::forward<Tup>(tup_));
-                if constexpr (std::equality_comparable_with<decltype(value_), decltype(field)>) {
-                    return value_ == field;
-                } else {
-                    return false;
+        consteval std::size_t find_impl(Tup &&tup, T&& value, std::index_sequence<Is...>) const {
+            struct checker {
+                Tup tup_;
+                T value_;
+                int idx_;
+
+                consteval bool operator()() {
+                    constexpr auto field = std::get<idx_>(std::forward<Tup>(tup_));
+                    if constexpr (std::equality_comparable_with<T, Tup>) {
+                        return value_ == field;
+                    } else {
+                        return false;
+                    }
                 }
             };
-            constexpr std::array arr{pred.template operator()<Is>()...};
+            constexpr std::array arr{ checker{ .tup_ = std::forward<Tup>(tup), .value_ = std::forward<T>(value), .idx_ = Is }()...};
             return std::distance(std::ranges::begin(arr), std::ranges::find(arr, true));
         }
 

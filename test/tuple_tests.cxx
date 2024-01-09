@@ -157,6 +157,6 @@ TEST(tuple_find, find_found) {
     std::size_t expected = 1;
     constexpr auto adaptor = find(2);
 
-    auto actual = fst | adaptor;
+    auto actual = find(fst, 2);
     EXPECT_EQ(expected, actual);
 }
