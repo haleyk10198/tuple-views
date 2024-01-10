@@ -2,6 +2,7 @@
 #include "tuple_algorithms.hxx"
 #include <string>
 #include <gtest/gtest.h>
+#include <range/v3/to_container.hpp>
 
 using namespace views::tuple;
 using namespace ranges::tuple;
@@ -169,23 +170,42 @@ TEST(tuple_find, find_not_found) {
 }
 
 TEST(tuple_enumerate, enumerate_yields_tuple) {
-    std::tuple subject {1.0, 2, "3"};
-    std::tuple expected {std::pair{0, 1.0}, std::pair{1, 2}, std::pair{2, "3"}};
+    std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{std::pair{0, 1.0}, std::pair{1, 2}, std::pair{2, "3"}};
 
     auto actual = subject | enumerate;
     EXPECT_EQ(expected, actual);
 }
 
 TEST(tuple_for_each, for_each_indexed_accepts_kv_closure) {
-    std::tuple subject {0, 1, 2};
-    std::vector<int> expected_idx {0, 1, 2};
+    std::tuple subject{0, 1, 2};
+    std::vector<int> expected_idx{0, 1, 2};
     std::vector<int> actual_idx;
 
-    subject | for_each_indexed([&actual_idx](auto&& pp) {
-        auto&& [key, value] = pp;
+    subject | for_each_indexed([&actual_idx](auto &&pp) {
+        auto &&[key, value] = pp;
         actual_idx.push_back(key);
         EXPECT_EQ(key, value);
     });
 
     EXPECT_EQ(expected_idx, actual_idx);
 }
+
+TEST(tuple_chunk, chunk_gt_sz_is_empty) {
+    std::tuple subject{1, 2, 3};
+    std::tuple expected{};
+    auto actual = subject | slide<4>;
+
+    EXPECT_EQ(expected, actual);
+}
+
+#if __cplusplus > 202002L
+TEST(tuple_chunk, chunk_gt_sz_is_consistent_with_range_chunk_gt) {
+    std::tuple subject{1, 2, 3};
+    auto actual = subject | slide<4>;
+
+    auto contract = std::views::iota(0) | std::views::take(3) | std::views::slide(4);
+
+    EXPECT_TRUE(contract.empty() && std::tuple_size_v<decltype(actual)> == 0);
+}
+#endif

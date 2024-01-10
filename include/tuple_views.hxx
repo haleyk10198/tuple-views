@@ -10,6 +10,7 @@
 #include "views/tuple_reverse.hxx"
 #include "views/tuple_zip.hxx"
 #include "views/tuple_adaptor.hxx"
+#include "views/tuple_slide.hxx"
 
 namespace views::tuple {
     using namespace ranges::views::tuple;
