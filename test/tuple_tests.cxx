@@ -191,7 +191,7 @@ TEST(tuple_for_each, for_each_indexed_accepts_kv_closure) {
     EXPECT_EQ(expected_idx, actual_idx);
 }
 
-TEST(tuple_chunk, chunk_gt_sz_is_empty) {
+TEST(tuple_slide, slide_gt_sz_is_empty) {
     std::tuple subject{1, 2, 3};
     std::tuple expected{};
     auto actual = subject | slide<4>;
@@ -199,13 +199,26 @@ TEST(tuple_chunk, chunk_gt_sz_is_empty) {
     EXPECT_EQ(expected, actual);
 }
 
-#if __cplusplus > 202002L
-TEST(tuple_chunk, chunk_gt_sz_is_consistent_with_range_chunk_gt) {
-    std::tuple subject{1, 2, 3};
-    auto actual = subject | slide<4>;
+TEST(tuple_slide, slide_non_zero_sz) {
+    std::tuple subject{1, 2, 3, 4};
+    std::tuple expected{ std::tuple{1, 2}, std::tuple{2, 3}, std::tuple{3, 4}};
+    auto actual = subject | slide<2>;
 
-    auto contract = std::views::iota(0) | std::views::take(3) | std::views::slide(4);
-
-    EXPECT_TRUE(contract.empty() && std::tuple_size_v<decltype(actual)> == 0);
+    EXPECT_EQ(expected, actual);
 }
-#endif
+
+TEST(tuple_chunk, chunk_gt_is_id) {
+    std::tuple subject{1, 2, 3, 4};
+    std::tuple expected = subject;
+    auto actual = subject | chunk<10>;
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_chunk, chunk_non_zero_sz) {
+    std::tuple subject{1, 2, 3, 4};
+    std::tuple expected{std::tuple{1, 2, 3}, std::tuple{4}};
+    auto actual = subject | chunk<3>;
+
+    EXPECT_EQ(expected, actual);
+}

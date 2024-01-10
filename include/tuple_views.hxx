@@ -11,6 +11,7 @@
 #include "views/tuple_zip.hxx"
 #include "views/tuple_adaptor.hxx"
 #include "views/tuple_slide.hxx"
+#include "views/tuple_chunk.hxx"
 
 namespace views::tuple {
     using namespace ranges::views::tuple;

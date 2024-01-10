@@ -10,11 +10,12 @@
 
 namespace ranges::views::tuple {
     template<std::size_t sz>
+    requires (sz > 0)
     struct slide_fn : tuple_adaptor_closure<slide_fn<sz>> {
     private:
         static constexpr auto offsets = std::make_index_sequence<sz>();
 
-        template<typename Tup, std::size_t I, std::size_t... Offsets>
+        template<std::size_t I, typename Tup, std::size_t... Offsets>
         constexpr auto make_chunk(Tup &&tup, std::index_sequence<Offsets...>) const {
             return std::tuple{std::get<I + Offsets>(std::forward<Tup>(tup))...};
         }
@@ -27,7 +28,7 @@ namespace ranges::views::tuple {
     public:
         template<typename Tup>
         constexpr auto operator()(Tup &&tup) const {
-            if constexpr (ranges::tuple::_tuple_size_v<Tup> > 0 && ranges::tuple::_tuple_size_v<Tup> < sz) {
+            if constexpr (ranges::tuple::_tuple_size_v<Tup> > sz) {
                 return slide_impl(std::forward<Tup>(tup),
                                   std::make_index_sequence<ranges::tuple::_tuple_size_v<Tup> + 1 - sz>());
             } else {
