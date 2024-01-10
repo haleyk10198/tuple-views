@@ -12,6 +12,7 @@
 #include "views/tuple_adaptor.hxx"
 #include "views/tuple_adjacent.hxx"
 #include "views/tuple_chunk.hxx"
+#include "views/tuple_stride.hxx"
 
 namespace views::tuple {
     using namespace ranges::views::tuple;

@@ -222,3 +222,19 @@ TEST(tuple_chunk, chunk_non_zero_sz) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(tuple_stride, stride_gt_sz_yields_singleton) {
+    std::tuple subject {1.0, 2, "3"};
+    std::tuple expected {1.0};
+    auto actual = subject | stride<4>;
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_stride, stride_non_zero_sz) {
+    std::tuple subject {1, 2, 3, 4, 5, 6, 7};
+    std::tuple expected {1, 3, 5, 7};
+    auto actual = subject | stride<2>;
+
+    EXPECT_EQ(expected, actual);
+}
