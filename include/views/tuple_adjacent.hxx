@@ -2,8 +2,8 @@
 // Created by kkwok9 on 1/10/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_SLIDE_HXX
-#define TUPLE_VIEWS_TUPLE_SLIDE_HXX
+#ifndef TUPLE_VIEWS_TUPLE_ADJACENT_HXX
+#define TUPLE_VIEWS_TUPLE_ADJACENT_HXX
 
 #include "tuple_adaptor.hxx"
 #include <utilities/tuple_traits.hxx>
@@ -11,7 +11,7 @@
 namespace ranges::views::tuple {
     template<std::size_t sz>
     requires (sz > 0)
-    struct slide_fn : tuple_adaptor_closure<slide_fn<sz>> {
+    struct adjacent_fn : tuple_adaptor_closure<adjacent_fn<sz>> {
     private:
         static constexpr auto offsets = std::make_index_sequence<sz>();
 
@@ -38,7 +38,7 @@ namespace ranges::views::tuple {
     };
 
     template<std::size_t sz>
-    constexpr auto slide = slide_fn<sz>{};
+    constexpr auto adjacent = adjacent_fn<sz>{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_SLIDE_HXX
+#endif //TUPLE_VIEWS_TUPLE_ADJACENT_HXX
