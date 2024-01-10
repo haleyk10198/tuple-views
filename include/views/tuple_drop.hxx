@@ -7,6 +7,7 @@
 #include <tuple>
 #include <utility>
 #include "tuple_adaptor.hxx"
+#include <utilities/tuple_traits.hxx>
 
 namespace ranges::views::tuple {
     template<std::size_t sz>
@@ -19,9 +20,8 @@ namespace ranges::views::tuple {
 
     public:
         template<typename Tup>
-        requires (std::tuple_size_v<std::decay_t<Tup>> >= sz)
         constexpr auto operator()(Tup &&tup) const {
-            constexpr auto remaining_sz = std::tuple_size_v<std::decay_t<Tup>> - sz;
+            constexpr auto remaining_sz = ranges::tuple::_tuple_size_v<Tup> - sz;
             constexpr auto idx = std::make_index_sequence<remaining_sz>();
             return drop_impl(std::forward<Tup>(tup), idx);
         }

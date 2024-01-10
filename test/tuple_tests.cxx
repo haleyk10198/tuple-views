@@ -96,7 +96,6 @@ TEST(tuple_find_if, find_trait) {
         return std::is_integral_v<std::decay_t<T>>;
     });
 
-    static_assert(expected == actual);
     EXPECT_EQ(expected, actual);
 }
 
@@ -167,4 +166,26 @@ TEST(tuple_find, find_not_found) {
 
     auto actual = find(fst, "2"sv);
     EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_enumerate, enumerate_yields_tuple) {
+    std::tuple subject {1.0, 2, "3"};
+    std::tuple expected {std::pair{0, 1.0}, std::pair{1, 2}, std::pair{2, "3"}};
+
+    auto actual = subject | enumerate;
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_for_each, for_each_indexed_accepts_kv_closure) {
+    std::tuple subject {0, 1, 2};
+    std::vector<int> expected_idx {0, 1, 2};
+    std::vector<int> actual_idx;
+
+    subject | for_each_indexed([&actual_idx](auto&& pp) {
+        auto&& [key, value] = pp;
+        actual_idx.push_back(key);
+        EXPECT_EQ(key, value);
+    });
+
+    EXPECT_EQ(expected_idx, actual_idx);
 }
