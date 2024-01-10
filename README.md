@@ -22,4 +22,6 @@ auto i_hate_parameter_pack(Func&& func, Arg... args) {
 
 - Tuples are not homogeneous hence not supported by std::ranges
 - Return types are not guaranteed known at compile-type, so calls like filter are `consteval`
+- Things like `find` are also `consteval` because they expect users to `std::get` with it and consumes an constexpr
+- No adaptor syntax / `operator|` support for `consteval` algorithms due to limitation of C++ language model.
 - Supports std::tuple only, sorry, no `boost::tuple`

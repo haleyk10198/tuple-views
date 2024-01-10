@@ -40,44 +40,30 @@ namespace ranges::tuple {
 
     constexpr auto find_if = find_if_fn{};
 
-    struct find_fn : tuple_adaptor<find_fn> {
-        template<typename Tup, typename T>
-        struct checker {
-            Tup tup_;
-            T value_;
-
-            template<std::size_t idx>
-            consteval bool operator()() {
-                constexpr auto field = std::get<idx>(std::forward<Tup>(tup_));
-                if constexpr (std::equality_comparable_with<T, Tup>) {
-                    return value_ == field;
-                } else {
-                    return false;
-                }
+    struct find_fn {
+        template<typename F, typename T>
+        constexpr bool cmp_field(const F& field, const T& value) const {
+            if constexpr (std::equality_comparable_with<F, T>) {
+                return field == value;
+            } else {
+                return false;
             }
-        };
+        }
 
         template<typename Tup, typename T, std::size_t... Is>
-        consteval std::size_t find_impl(Tup &&tup, T&& value, std::index_sequence<Is...>) const {
-            constexpr checker checker_ { .tup_ = std::forward<Tup>(tup), .value_ = std::forward<T>(value) };
-            constexpr std::array arr{ checker_.template operator()<Is>()...};
+        constexpr std::size_t find_impl(Tup tup, T value, std::index_sequence<Is...>) const {
+            std::array arr{cmp_field(std::get<Is>(tup), value) ...};
             return std::distance(std::ranges::begin(arr), std::ranges::find(arr, true));
         }
 
     public:
         template<typename Tup, typename T>
-        consteval std::size_t operator()(Tup &&tup, T &&value) const {
+        consteval std::size_t operator()(Tup tup, T value) const {
             constexpr auto sz = std::tuple_size_v<std::decay_t<Tup>>;
             constexpr auto idx = std::make_index_sequence<sz>();
 
-            return find_impl(std::forward<Tup>(tup), std::forward<T>(value), idx);
+            return find_impl(tup, value, idx);
         }
-
-        static constexpr int arity_ = 2;
-
-        using tuple_adaptor::operator();
-
-        static constexpr bool has_simple_extra_args_ = true;
     };
 
     constexpr auto find = find_fn{};

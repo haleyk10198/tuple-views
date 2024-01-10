@@ -5,6 +5,7 @@
 
 using namespace views::tuple;
 using namespace ranges::tuple;
+using namespace std::literals;
 
 TEST(tuple_take, take_n_is_id) {
     std::tuple subject{1.0, 2, "3"};
@@ -155,8 +156,15 @@ TEST(tuple_zip, zip_adaptor_tuck_size) {
 TEST(tuple_find, find_found) {
     constexpr std::tuple fst{"1", 2, "3"};
     std::size_t expected = 1;
-    constexpr auto adaptor = find(2);
 
-    auto actual = find(fst, 2);
+    constexpr auto actual = find(fst, 2);
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_find, find_not_found) {
+    constexpr std::tuple fst{"1"sv, 2, "3"sv};
+    std::size_t expected = std::tuple_size_v<decltype(fst)>;
+
+    auto actual = find(fst, "2"sv);
     EXPECT_EQ(expected, actual);
 }
