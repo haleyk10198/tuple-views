@@ -32,4 +32,13 @@ namespace ranges::views::tuple {
     constexpr auto take = take_fn<sz>{};
 }
 
+#define take_while(Tup, Pred) \
+    __take_while_impl(Tup, Pred, __take_while_parameter_t_##__COUNTER__);
+
+// NOLINTNEXTLINE
+#define __take_while_impl(Tup, Pred, TT) \
+    (take<(Tup) | find_if([]<typename TT>(TT&& field) -> bool { \
+        return !std::invoke((Pred), std::forward<TT>(field));   \
+    })>)(Tup)\
+
 #endif //TUPLE_VIEWS_TUPLE_TAKE_HXX

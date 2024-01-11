@@ -245,5 +245,38 @@ TEST(tuple_as_const, as_const_satifies_is_const) {
 
     static_assert(std::is_same_v<std::tuple_element_t<0, decltype(const_subject)>, const double>);
     static_assert(std::is_same_v<std::tuple_element_t<1, decltype(const_subject)>, const int>);
-    static_assert(std::is_same_v<std::tuple_element_t<2, decltype(const_subject)>, const char* const>);
+    static_assert(std::is_same_v<std::tuple_element_t<2, decltype(const_subject)>, const char *const>);
+}
+
+TEST(tuple_take_while, take_while_true_is_id) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{subject};
+
+    auto actual = take_while(subject, [](auto &&) {
+        return true;
+    });
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_take_while, take_while_false_is_empty) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{};
+
+    auto actual = take_while(subject, [](auto &&) {
+        return false;
+    });
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_take_while, take_while_some) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{1.0, 2};
+
+    auto actual = take_while(subject, []<typename T>(T &&) {
+        return std::is_arithmetic_v<std::decay_t<T>>;
+    });
+
+    EXPECT_EQ(expected, actual);
 }
