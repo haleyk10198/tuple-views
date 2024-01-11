@@ -3,6 +3,12 @@
 Some boiler-plates similar to std::ranges API to interact with tuple as if they are views,
 packaged under `views::tuple` namespace not to be confused with actual ranges
 
+## Installation
+
+This library is headers only, just clone to include path and use by `#include <tuple_views/all.hxx>`.
+
+Requires C++20 for concept checks. If this idea matures we can do C++14 SFINAEs.
+
 ## Motivation
 
 Main motivation was to work with variadic templates easier.
@@ -41,3 +47,8 @@ take_while(foo, [](auto&& x) { return /* ... your pred ... */; }); // calls macr
 ```
 
 The `take_while` macro is far from perfect though, for example, it doesn't support adaptor syntax.
+
+## Comparison to range-v3
+
+- More calls than what's in `<range/v3/utilitye/tuple_algorithm.hpp>`
+- Adaptor syntax support

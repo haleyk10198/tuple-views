@@ -2,11 +2,11 @@
 // Created by kkwok9 on 1/10/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_ADJACENT_HXX
-#define TUPLE_VIEWS_TUPLE_ADJACENT_HXX
+#ifndef TUPLE_VIEWS_ADJACENT_HXX
+#define TUPLE_VIEWS_ADJACENT_HXX
 
 #include "tuple_adaptor.hxx"
-#include <utilities/tuple_traits.hxx>
+#include "tuple_views/utilities/tuple_traits.hxx"
 
 namespace ranges::views::tuple {
     template<std::size_t sz>
@@ -41,4 +41,4 @@ namespace ranges::views::tuple {
     constexpr auto adjacent = adjacent_fn<sz>{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_ADJACENT_HXX
+#endif //TUPLE_VIEWS_ADJACENT_HXX

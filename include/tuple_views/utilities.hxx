@@ -5,6 +5,6 @@
 #ifndef TUPLE_VIEWS_TUPLE_UTILITIES_HXX
 #define TUPLE_VIEWS_TUPLE_UTILITIES_HXX
 
-#include "utilities/tuple_traits.hxx"
+#include "tuple_views/utilities/tuple_traits.hxx"
 
 #endif //TUPLE_VIEWS_TUPLE_UTILITIES_HXX

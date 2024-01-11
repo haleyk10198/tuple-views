@@ -1,13 +1,13 @@
 // Created by kkwok9 on 1/8/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_DROP_HXX
-#define TUPLE_VIEWS_TUPLE_DROP_HXX
+#ifndef TUPLE_VIEWS_DROP_HXX
+#define TUPLE_VIEWS_DROP_HXX
 
 #include <tuple>
 #include <utility>
 #include "tuple_adaptor.hxx"
-#include <utilities/tuple_traits.hxx>
+#include "tuple_views/utilities/tuple_traits.hxx"
 
 namespace ranges::views::tuple {
     template<std::size_t sz>
@@ -40,4 +40,4 @@ namespace ranges::views::tuple {
         return !std::invoke((Pred), std::forward<TT>(field));   \
     })>)(Tup)\
 
-#endif //TUPLE_VIEWS_TUPLE_DROP_HXX
+#endif //TUPLE_VIEWS_DROP_HXX

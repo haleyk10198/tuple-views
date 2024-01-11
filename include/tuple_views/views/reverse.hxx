@@ -2,13 +2,13 @@
 // Created by kkwok9 on 1/8/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_REVERSE_HXX
-#define TUPLE_VIEWS_TUPLE_REVERSE_HXX
+#ifndef TUPLE_VIEWS_REVERSE_HXX
+#define TUPLE_VIEWS_REVERSE_HXX
 
 #include <tuple>
 #include <utility>
 #include "tuple_adaptor.hxx"
-#include <utilities/tuple_traits.hxx>
+#include "tuple_views/utilities/tuple_traits.hxx"
 
 namespace ranges::views::tuple {
     struct reverse_fn: tuple_adaptor_closure<reverse_fn> {
@@ -28,4 +28,4 @@ namespace ranges::views::tuple {
     constexpr auto reverse = reverse_fn{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_REVERSE_HXX
+#endif //TUPLE_VIEWS_REVERSE_HXX

@@ -1,11 +1,10 @@
-#include "tuple_views.hxx"
-#include "tuple_algorithms.hxx"
+#include "tuple_views/views.hxx"
+#include "tuple_views/algorithms.hxx"
 #include <string>
 #include <gtest/gtest.h>
-#include <range/v3/to_container.hpp>
 
-using namespace views::tuple;
 using namespace ranges::tuple;
+using namespace views::tuple;
 using namespace std::literals;
 
 TEST(tuple_take, take_n_is_id) {

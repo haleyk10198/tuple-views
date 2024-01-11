@@ -2,11 +2,11 @@
 // Created by kkwok9 on 1/10/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_AS_CONST_HXX
-#define TUPLE_VIEWS_TUPLE_AS_CONST_HXX
+#ifndef TUPLE_VIEWS_AS_CONST_HXX
+#define TUPLE_VIEWS_AS_CONST_HXX
 
 #include "tuple_adaptor.hxx"
-#include <utilities/tuple_traits.hxx>
+#include "tuple_views/utilities/tuple_traits.hxx"
 
 namespace ranges::views::tuple {
     struct as_const_fn: tuple_adaptor_closure<as_const_fn> {
@@ -30,4 +30,4 @@ namespace ranges::views::tuple {
     constexpr auto as_const = as_const_fn{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_AS_CONST_HXX
+#endif //TUPLE_VIEWS_AS_CONST_HXX

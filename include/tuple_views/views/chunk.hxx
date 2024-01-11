@@ -2,8 +2,8 @@
 // Created by kkwok9 on 1/10/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_CHUNK_HXX
-#define TUPLE_VIEWS_TUPLE_CHUNK_HXX
+#ifndef TUPLE_VIEWS_CHUNK_HXX
+#define TUPLE_VIEWS_CHUNK_HXX
 
 #include "tuple_adaptor.hxx"
 
@@ -39,4 +39,4 @@ namespace ranges::views::tuple {
     constexpr auto chunk = chunk_fn<sz>{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_CHUNK_HXX
+#endif //TUPLE_VIEWS_CHUNK_HXX

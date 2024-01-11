@@ -2,13 +2,13 @@
 // Created by kkwok9 on 1/9/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_FOR_EACH_HXX
-#define TUPLE_VIEWS_TUPLE_FOR_EACH_HXX
+#ifndef TUPLE_VIEWS_FOR_EACH_HXX
+#define TUPLE_VIEWS_FOR_EACH_HXX
 
-#include <range/v3/utility/tuple_algorithm.hpp>
-#include <views/tuple_adaptor.hxx>
+#include "tuple_views/views/tuple_adaptor.hxx"
 #include <array>
-#include <views/tuple_zip.hxx>
+#include "tuple_views/views/zip.hxx"
+#include <functional>
 
 namespace ranges::tuple {
     struct for_each_fn : tuple_adaptor<for_each_fn> {
@@ -63,4 +63,4 @@ namespace ranges::tuple {
     constexpr auto for_each_indexed = for_each_indexed_fn{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_FOR_EACH_HXX
+#endif //TUPLE_VIEWS_FOR_EACH_HXX

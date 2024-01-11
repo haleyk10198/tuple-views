@@ -11,8 +11,8 @@
 #include <iterator>
 #include <algorithm>
 #include <concepts>
-#include <utilities/tuple_traits.hxx>
-#include <views/tuple_adaptor.hxx>
+#include "tuple_views/utilities/tuple_traits.hxx"
+#include "tuple_views/views/tuple_adaptor.hxx"
 
 namespace ranges::tuple {
     struct find_if_fn : tuple_adaptor<find_if_fn> {

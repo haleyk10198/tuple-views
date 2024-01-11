@@ -2,8 +2,8 @@
 // Created by kkwok9 on 1/9/24.
 //
 
-#ifndef TUPLE_VIEWS_TUPLE_ZIP_HXX
-#define TUPLE_VIEWS_TUPLE_ZIP_HXX
+#ifndef TUPLE_VIEWS_ZIP_HXX
+#define TUPLE_VIEWS_ZIP_HXX
 
 #include <ranges>
 #include <tuple>
@@ -40,4 +40,4 @@ namespace ranges::views::tuple {
     constexpr auto zip = zip_fn{};
 }
 
-#endif //TUPLE_VIEWS_TUPLE_ZIP_HXX
+#endif //TUPLE_VIEWS_ZIP_HXX

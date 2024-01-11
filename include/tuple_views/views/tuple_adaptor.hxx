@@ -201,7 +201,10 @@ namespace ranges {
     };
 
     using views::tuple::_adaptor::tuple_adaptor;
+}
 
+namespace views::tuple {
+    using namespace ranges::views::tuple;
 }
 
 #endif //TUPLE_VIEWS_TUPLE_ADAPTOR_HXX
