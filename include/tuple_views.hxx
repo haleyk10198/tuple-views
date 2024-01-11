@@ -13,6 +13,7 @@
 #include "views/tuple_adjacent.hxx"
 #include "views/tuple_chunk.hxx"
 #include "views/tuple_stride.hxx"
+#include "views/tuple_as_const.hxx"
 
 namespace views::tuple {
     using namespace ranges::views::tuple;

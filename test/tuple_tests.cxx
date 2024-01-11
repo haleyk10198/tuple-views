@@ -201,7 +201,7 @@ TEST(tuple_adjacent, adjacent_gt_sz_is_empty) {
 
 TEST(tuple_adjacent, adjacent_non_zero_sz) {
     std::tuple subject{1, 2, 3, 4};
-    std::tuple expected{ std::tuple{1, 2}, std::tuple{2, 3}, std::tuple{3, 4}};
+    std::tuple expected{std::tuple{1, 2}, std::tuple{2, 3}, std::tuple{3, 4}};
     auto actual = subject | adjacent<2>;
 
     EXPECT_EQ(expected, actual);
@@ -224,17 +224,26 @@ TEST(tuple_chunk, chunk_non_zero_sz) {
 }
 
 TEST(tuple_stride, stride_gt_sz_yields_singleton) {
-    std::tuple subject {1.0, 2, "3"};
-    std::tuple expected {1.0};
+    std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{1.0};
     auto actual = subject | stride<4>;
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(tuple_stride, stride_non_zero_sz) {
-    std::tuple subject {1, 2, 3, 4, 5, 6, 7};
-    std::tuple expected {1, 3, 5, 7};
+    std::tuple subject{1, 2, 3, 4, 5, 6, 7};
+    std::tuple expected{1, 3, 5, 7};
     auto actual = subject | stride<2>;
 
     EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_as_const, as_const_satifies_is_const) {
+    static constexpr std::tuple subject{1.0, 2, "3"};
+    constexpr auto const_subject = subject | as_const;
+
+    static_assert(std::is_same_v<std::tuple_element_t<0, decltype(const_subject)>, const double>);
+    static_assert(std::is_same_v<std::tuple_element_t<1, decltype(const_subject)>, const int>);
+    static_assert(std::is_same_v<std::tuple_element_t<2, decltype(const_subject)>, const char* const>);
 }
