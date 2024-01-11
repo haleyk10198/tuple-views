@@ -31,4 +31,13 @@ namespace ranges::views::tuple {
     constexpr auto drop = drop_fn<sz>{};
 }
 
+#define drop_while(Tup, Pred) \
+    __drop_while_impl(Tup, Pred, __drop_while_parameter_t_##__COUNTER__);
+
+// NOLINTNEXTLINE
+#define __drop_while_impl(Tup, Pred, TT) \
+    (drop<(Tup) | find_if([]<typename TT>(TT&& field) -> bool { \
+        return !std::invoke((Pred), std::forward<TT>(field));   \
+    })>)(Tup)\
+
 #endif //TUPLE_VIEWS_TUPLE_DROP_HXX

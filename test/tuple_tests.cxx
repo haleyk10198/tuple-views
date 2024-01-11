@@ -280,3 +280,36 @@ TEST(tuple_take_while, take_while_some) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(tuple_drop_while, drop_while_true_is_empty) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{};
+
+    auto actual = drop_while(subject, [](auto &&) {
+        return true;
+    });
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_drop_while, drop_while_false_is_id) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{ subject };
+
+    auto actual = drop_while(subject, [](auto &&) {
+        return false;
+    });
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(tuple_drop_while, drop_while_some) {
+    constexpr std::tuple subject{1.0, 2, "3"};
+    std::tuple expected{2, "3"};
+
+    auto actual = drop_while(subject, []<typename T>(T && value) {
+        return std::is_arithmetic_v<std::decay_t<T>> && !std::is_integral_v<std::decay_t<T>>;
+    });
+
+    EXPECT_EQ(expected, actual);
+}
